@@ -5,8 +5,12 @@ class Config:
     General configuration parent class
     '''
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://abuga:password@localhost/watchlist'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://abuga:password@localhost/pitches'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
+    @staticmethod
+    def init_app(app):
+        pass
 
 class ProdConfig(Config):
     '''
