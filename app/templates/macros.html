@@ -1,7 +1,41 @@
 {% macro displayPitches(all) %}
 
-    {% for movie in movie_list %}
-        <li>{{ movie.title}}</li>
+<!--    {% for pitch in pitch_list %}
+        <li>{{ pitch.title}}</li>
+        <li class="text-center">
+            <a href="/category/{{pitch.category}}">
+                {{ pitch.pitch_catergory}}</a>
+        </li>
+        <li>{{ pitch.description}}</li>
     {% endfor %}
+
+-->
+
+    <li class="text-center">
+        <a href="/category/Motivational">Category</a>
+    </li>
+    <li>Testing. It displays the item.</li>
+
+{% endmacro %}
+
+<!--    {% for pitch in pitch_list %}
+        <li>{{ pitch.title}}</li>
+        <li class="text-center">
+            <a href="/category/{{pitch.category}}">
+                {{ pitch.pitch_catergory }}</a>
+        </li>
+        <li>{{ pitch.description}}</li>
+    {% endfor %}
+
+-->
+{% macro displayPitchesCat(pitches_list) %}
+    {% for review in pitches_list %}
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 review-card">
+        <h2> {{ review.title}} </h2>
+        <p> {{ review.description | truncate(30) }}</p>
+    </div>
+    {% endfor %}
+
+    <li>Testing. It displays the item. according to category</li>
 
 {% endmacro %}
