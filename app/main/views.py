@@ -1,13 +1,10 @@
-from flask import render_template
-from app import app
-from .models import pitches
+from flask import render_template,redirect,url_for
+from . import main
+from ..models import Pitch
 from .forms import PitchForm
 
-
-Pitches = pitches.Pitch
-
 # Views
-@app.route('/')
+@main.route('/')
 def index():
 
     '''
@@ -17,7 +14,7 @@ def index():
     title = 'Home - Welcome to The best Movie Review Website Online'
     return render_template('index.html', title = title)
 
-@app.route('/category/<string:category>')
+@main.route('/category/<string:category>')
 def cat(category):
 
     '''
@@ -32,7 +29,7 @@ def cat(category):
     return render_template('categories.html',title = title)#, pitches=pitches, pitch=pitch)
 
 #submit a pitch view, need to change the unique id
-@app.route('/submitpitch/<int:userid>', methods = ['GET','POST'])
+@main.route('/submitpitch/<int:userid>', methods = ['GET','POST'])
 def new_pitch(userid):
     form = PitchForm()
 #pitch id needs a unique number
