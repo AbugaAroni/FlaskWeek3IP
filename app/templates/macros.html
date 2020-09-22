@@ -1,0 +1,7 @@
+{% macro displayPitches(all) %}
+
+    {% for movie in movie_list %}
+        <li>{{ movie.title}}</li>
+    {% endfor %}
+
+{% endmacro %}

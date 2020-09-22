@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+
+<!-- Content block -->
+{% block content %}
+
+<!-- Display all pitches-->
+<h3> Pitches</h3>
+<ul>
+    {{ macro.displayPitches(all)}}
+</ul>
+
+
+{% endblock%}
