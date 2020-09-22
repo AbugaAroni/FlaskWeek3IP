@@ -8,8 +8,6 @@ class Pitch:
         self.category = pitch_category
         self.description = pitch_description
 
-
-
     def save_pitches(self):
         Pitch.all_pitches.append(self)
 
