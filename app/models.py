@@ -103,14 +103,20 @@ class Pitch(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    #get reviews according to persons id
+    #get pitches according to persons id
     @classmethod
     def get_userpitch(cls,id):
         pitches = Pitch.query.filter_by(user_id=id).all()
         return pitches
 
-    #get reviews according to persons id
+    #get pitches according to persons id
     @classmethod
     def get_pitchcat(cls,cat):
         pitches = Pitch.query.filter_by(pitch_category=cat).all()
+        return pitches
+
+    #get all pitches
+    @classmethod
+    def get_pitches(cls):
+        pitches = Pitch.query.all()
         return pitches

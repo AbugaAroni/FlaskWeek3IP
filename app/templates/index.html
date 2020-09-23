@@ -9,9 +9,21 @@
 </li>
 <!-- Display all pitches-->
 <h3> Pitches</h3>
-<ul>
-    {{ macro.displayPitches(all)}}
-</ul>
+<!--Display pitches-->
+<div class="col-md-6">
+  <h3> Your pitches </h3>
+  {% if pitches %}
+      {% for review in pitches %}
+      <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 review-card">
+          <h2> {{ review.pitch_title}} </h2>
+          <p> Category: {{review.pitch_category}} </p>
+          <p> Description: {{ review.pitch_description }}</p>
+      </div>
+      {% endfor %}
+  {%else%}
+  <p>Pitches doesn't work</p>
+  {% endif %}
+</div>
 
 
 {% endblock%}

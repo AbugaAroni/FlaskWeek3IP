@@ -13,9 +13,10 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
+    pitches = Pitch.get_pitches()
 
     title = 'Home - Welcome to The best Movie Review Website Online'
-    return render_template('index.html', title = title)
+    return render_template('index.html', title = title, pitches=pitches)
 
 @main.route('/category/<string:category>')
 def cat(category):
