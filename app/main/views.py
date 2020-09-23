@@ -4,6 +4,7 @@ from ..models import Pitch, User
 from .forms import PitchForm, UpdateProfile
 from .. import db
 from flask_login import login_required
+from flask_login import login_required, current_user
 
 # Views
 @main.route('/')
@@ -42,8 +43,10 @@ def new_pitch(userid):
         title = form.title.data
         category = form.category.data
         description = form.description.data
-        new_pitch = Pitches(pitchid,title,category,description)
-        new_pitch.save_pitches()
+        new_pitch = Pitch(pitch_title=title,pitch_category=category,pitch_description=description, user=current_user)
+        new_pitch.save_pitch()
+
+    #    return redirect(url_for('.new_pitch', userid))
 
     title = 'New Pitch'
     return render_template('new_pitch.html',title = title, pitch_form=form)
@@ -55,7 +58,7 @@ def profile(uname):
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user)    
+    return render_template("profile/profile.html", user = user)
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
