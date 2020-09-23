@@ -8,3 +8,7 @@ class PitchForm(FlaskForm):
     category = TextAreaField('Pitch category', validators=[Required()])
     description = TextAreaField('Pitch description', validators=[Required()])
     submit = SubmitField('Submit')
+
+class UpdateProfile(FlaskForm):
+    bio = TextAreaField('Tell us about you.',validators = [Required()])
+    submit = SubmitField('Submit')
