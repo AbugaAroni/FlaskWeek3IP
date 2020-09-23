@@ -1,10 +1,12 @@
 {% extends 'base.html'%}
+<!-- {% import 'macros.html' as macro%} -->
 
 {% block content %}
 <div class="container">
 <div class="row">
 <!-- displaying  Username-->
   <div class="col-md-4">
+    <h3> Your profile </h3>
     <h3> {{user.username| capitalize}} </h3>
 
     <!--Displaying user bio-->
@@ -14,18 +16,24 @@
       <p> {{user.username| capitalize}} has no bio </p>
     {% endif %}
 
-    {% if user == current_user %}
-    <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a>
-{% endif %}
+      {% if user == current_user %}
+        <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a>
+      {% endif %}
   </div>
 
-  <!--Display profile photo-->
+  <!--Display pitches-->
   <div class="col-md-4">
-
-    {% if user.profile_pic_path %}
-    <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
+    <h3> Your pitches </h3>
+    {% if pitches %}
+        {% for review in pitches %}
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 review-card">
+            <h2> {{ review.pitch_title}} </h2>
+            <p> Category: {{review.pitch_category}} </p>
+            <p> Description: {{ review.pitch_description }}</p>          
+        </div>
+        {% endfor %}
     {%else%}
-    <p>No profile picture</p>
+    <p>Pitches doesn't work</p>
     {% endif %}
   </div>
 </div>

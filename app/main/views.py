@@ -54,11 +54,12 @@ def new_pitch(userid):
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
-
+    userid = user.id
+    pitches = Pitch.get_userpitch(userid)
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user)
+    return render_template("profile/profile.html", user = user, pitches=pitches)
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
