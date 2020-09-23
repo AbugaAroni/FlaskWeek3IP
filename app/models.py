@@ -55,7 +55,7 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),unique = True,index = True)
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
-    pass_secure = db.Column(db.String(255))
+    password = db.Column(db.String(255))
 
 
     def __repr__(self):

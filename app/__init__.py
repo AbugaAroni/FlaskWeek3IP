@@ -2,9 +2,11 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from config import config_options
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
+mail = Mail()
 
 from flask_login import LoginManager
 
@@ -23,6 +25,7 @@ def create_app(config_name):
     bootstrap.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
+    mail.init_app(app)
 
     # Will add the views and forms
 
