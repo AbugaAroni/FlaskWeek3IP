@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="col-md-8">
+
+            <h2> Your pitch </h2>
+            <h3> Title: {{pitches.pitch_title| capitalize}} </h3>
+
+            <!--Displaying pitch info-->
+            {% if pitches %}
+              <h4> Category: <a href="/category/{{pitches.pitch_category}}"> {{pitches.pitch_category}}</a></h4>
+              <br>
+              <p> Description: {{pitches.pitch_description}}</p>
+            {%else%}
+              <p> Something went wrong</p>
+            {% endif %}
+    <br>
+      <hr><hr>
+          <h4> Comments </h4>
+            {% if comments %}
+                {% for c in comments %}
+                  <p> {{c.comment_description}}</p>
+                    {% if user%}
+                      {%for u in user%}
+                        {% if c.user_id == u.id%}
+                          <h5> Author: {{u.username}} </h5>
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                    <hr>
+                {% endfor %}
+            {%else%}
+              <p> Something went wrong or there are no comments available for this pitch</p>
+            {% endif %}
+
+        </div>
+
+        <div class="col-md-4">
+            <h3> Leave a comment </h3>
+            {{ wtf.quick_form(form) }}
+        </div>
+
+    </div>
+
+{% endblock %}

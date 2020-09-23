@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from ..models import Pitch, User
-from .forms import PitchForm, UpdateProfile
+from ..models import Pitch, User, Comment
+from .forms import PitchForm, UpdateProfile, Commentform
 from .. import db
 from flask_login import login_required
 from flask_login import login_required, current_user
@@ -15,7 +15,7 @@ def index():
     '''
     pitches = Pitch.get_pitches()
 
-    title = 'Home - Welcome to The best Movie Review Website Online'
+    title = 'Home '
     return render_template('index.html', title = title, pitches=pitches)
 
 @main.route('/category/<string:category>')
@@ -26,11 +26,12 @@ def cat(category):
     '''
 #    pitches = get_pitches(category)
     #categories title
-    title = 'Categories'
+    cat = category
+    title = f'{cat} pitches'
 
     pitches = Pitch.get_pitchcat(category)
 
-    return render_template('categories.html',title = title, pitches=pitches)#, pitches=pitches, pitch=pitch)
+    return render_template('categories.html',title = title, pitches=pitches, category=cat)#, pitches=pitches, pitch=pitch)
 
 #submit a pitch view, need to change the unique id
 @main.route('/submitpitch/<int:userid>', methods = ['GET','POST'])
@@ -52,6 +53,27 @@ def new_pitch(userid):
 
     title = 'New Pitch'
     return render_template('new_pitch.html',title = title, pitch_form=form)
+
+#submit a pitch view, need to change the unique id
+@main.route('/viewpitch/<int:pitchid>', methods = ['GET','POST'])
+@login_required
+def comment(pitchid):
+    form = Commentform()
+    #pitch id needs a unique number
+    pitchid=pitchid
+    pitches = Pitch.get_singlepitch(pitchid)
+    comments = Comment.get_comments(pitchid)
+    user = User.query.all()
+
+    if form.validate_on_submit():
+        description = form.description.data
+        new_comment = Comment(comment_description=description, user=current_user, pitch_id = pitchid)
+        new_comment.save_comment()
+
+        return redirect(url_for('main.comment',pitchid=pitchid))
+
+    title = 'View pitch'
+    return render_template('viewpitch.html',title = title, form=form, pitches = pitches, comments =comments, user =user)
 
 @main.route('/user/<uname>')
 def profile(uname):

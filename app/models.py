@@ -8,46 +8,6 @@ from datetime import datetime
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class Pitch:
-
-    all_pitches = []
-
-    def __init__(self,pitch_id,pitch_title,pitch_description,pitch_category):
-        self.id = pitch_id
-        self.title = pitch_title
-        self.category = pitch_category
-        self.description = pitch_description
-
-    def save_pitches(self):
-        Pitch.all_pitches.append(self)
-
-    @classmethod
-    def clear_pitches(cls):
-        Pitch.all_pitches.clear()
-
-    @classmethod
-    def get_pitches(cls,category):
-
-        response = []
-
-        for pitches in cls.all_pitches:
-            if pitch.pitch_category == category:
-                response.append(pitch)
-
-        return response
-
-    @property
-    def password(self):
-        raise AttributeError('You cannot read the password attribute')
-
-    @password.setter
-    def password(self, password):
-        self.pass_secure = generate_password_hash(password)
-
-
-    def verify_password(self,password):
-        return check_password_hash(self.pass_secure,password)
-
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
 
@@ -60,6 +20,8 @@ class User(UserMixin,db.Model):
     pass_secure = db.Column(db.String(255))
 
     pitches = db.relationship('Pitch',backref = 'user',lazy = "dynamic")
+    comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
+
 
     @property
     def password(self):
@@ -82,6 +44,7 @@ class Role(db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255))
+
     users = db.relationship('User',backref = 'role',lazy="dynamic")
 
 
@@ -99,6 +62,8 @@ class Pitch(db.Model):
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
+    comments = db.relationship('Comment', backref = 'pitches',lazy = "dynamic")
+
     def save_pitch(self):
         db.session.add(self)
         db.session.commit()
@@ -109,10 +74,16 @@ class Pitch(db.Model):
         pitches = Pitch.query.filter_by(user_id=id).all()
         return pitches
 
-    #get pitches according to persons id
+    #get pitches according to persons category
     @classmethod
     def get_pitchcat(cls,cat):
         pitches = Pitch.query.filter_by(pitch_category=cat).all()
+        return pitches
+
+    #get pitches according to id
+    @classmethod
+    def get_singlepitch(cls,id):
+        pitches = Pitch.query.filter_by(id=id).first()
         return pitches
 
     #get all pitches
@@ -120,3 +91,24 @@ class Pitch(db.Model):
     def get_pitches(cls):
         pitches = Pitch.query.all()
         return pitches
+
+
+class Comment(db.Model):
+
+    __tablename__='comments'
+
+    id = db.Column(db.Integer,primary_key = True)
+    comment_description = db.Column(db.String)
+    posted = db.Column(db.DateTime,default=datetime.utcnow)
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+    pitch_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    #get comments according to  pitchid
+    @classmethod
+    def get_comments(cls,id):
+        comments = Comment.query.filter_by(pitch_id=id).all()
+        return comments
