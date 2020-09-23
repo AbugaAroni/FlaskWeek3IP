@@ -2,6 +2,7 @@ from flask import render_template,redirect,url_for
 from . import main
 from ..models import Pitch
 from .forms import PitchForm
+from flask_login import login_required
 
 # Views
 @main.route('/')
@@ -30,6 +31,7 @@ def cat(category):
 
 #submit a pitch view, need to change the unique id
 @main.route('/submitpitch/<int:userid>', methods = ['GET','POST'])
+@login_required
 def new_pitch(userid):
     form = PitchForm()
 #pitch id needs a unique number
