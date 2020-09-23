@@ -5,26 +5,26 @@
 <div class="container">
   <div class="row">
       <div class="col-md">
-        <!-- Macro to display according to categories -->
-        <ul>
-            {{ macro.displayPitchesCat(pitches_list) }}
-        </ul>
-      </div>
-      <div class="col-md">
 
     <h1>Categories</h1>
         <hr>
-
-        {% if pitch %}
-            {{ macro.displayPitchesCat(pitches_list)}}
-
-        {% else%}
-            <h3 class="text-center">This movie has no reviews </h3>
-
-            <a class="btn btn-success btn-lg text-center" href="/submitpitch/1234"> Write a new review</a>
-        {% endif %}
-
+            <a class="btn btn-success btn-lg text-center" href="/submitpitch/1234"> Write a new pitch</a>
       </div>
+      <!--Display pitches categories-->
+        <div class="col-md-12">
+          <h3> Your pitches </h3>
+          {% if pitches %}
+              {% for review in pitches %}
+              <div class="col-md-6 col-lg-6 review-card">
+                  <h2> {{ review.pitch_title}} </h2>
+                  <p> Category: {{review.pitch_category}} </p>
+                  <p> Description: {{ review.pitch_description }}</p>
+              </div>
+              {% endfor %}
+          {%else%}
+          <p>Pitches doesn't work</p>
+          {% endif %}
+        </div>
   </div>
 </div>
 {% endblock %}

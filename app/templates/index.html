@@ -3,20 +3,15 @@
 
 <!-- Content block -->
 {% block content %}
-<!-- sumbit a new pitch according to a given userid -->
-<li class="text-center">
-    <a href="/submitpitch/1234">Add new pitch</a>
-</li>
 <!-- Display all pitches-->
-<h3> Pitches</h3>
+<h3>All Pitches</h3>
 <!--Display pitches-->
-<div class="col-md-6">
-  <h3> Your pitches </h3>
+<div class="col-md-12">
   {% if pitches %}
       {% for review in pitches %}
-      <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 review-card">
+      <div class="col-md-6 col-lg-6 review-card">
           <h2> {{ review.pitch_title}} </h2>
-          <p> Category: {{review.pitch_category}} </p>
+          <p> Category: {{review.pitch_category}} | View more <a href="/category/{{review.pitch_category}}"> {{review.pitch_category}} </a> pitches </p>
           <p> Description: {{ review.pitch_description }}</p>
       </div>
       {% endfor %}

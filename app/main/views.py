@@ -28,9 +28,9 @@ def cat(category):
     #categories title
     title = 'Categories'
 
-#    pitch = Pitches.get_pitches(pitches.category)
+    pitches = Pitch.get_pitchcat(category)
 
-    return render_template('categories.html',title = title)#, pitches=pitches, pitch=pitch)
+    return render_template('categories.html',title = title, pitches=pitches)#, pitches=pitches, pitch=pitch)
 
 #submit a pitch view, need to change the unique id
 @main.route('/submitpitch/<int:userid>', methods = ['GET','POST'])
