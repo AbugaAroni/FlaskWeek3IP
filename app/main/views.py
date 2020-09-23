@@ -46,7 +46,8 @@ def new_pitch(userid):
         new_pitch = Pitch(pitch_title=title,pitch_category=category,pitch_description=description, user=current_user)
         new_pitch.save_pitch()
 
-    #    return redirect(url_for('.new_pitch', userid))
+
+        return redirect(url_for('main.profile',uname=current_user.username))
 
     title = 'New Pitch'
     return render_template('new_pitch.html',title = title, pitch_form=form)
