@@ -13,7 +13,7 @@ A user can comment and upvote pitches.
 A can submit pitches.
 A user can view the pitches they have submitted.
 
-###Limitations
+### Limitations
 Tests and unittests do not work.
 
 ### Technologies Used
@@ -35,4 +35,4 @@ You will need a text editor to edit and view the code. s
 
 ### Link to the published site: [Pitches application by Abuga] (https://abugaaroninewstories.herokuapp.com/)
 
-### License: [MIT] (https://github.com/AbugaAroni/FlaskIP2/blob/master/LICENSE)
+### License: [MIT] (https://github.com/AbugaAroni/FlaskWeek3IP/blob/master/LICENSE)
