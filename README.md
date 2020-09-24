@@ -13,7 +13,7 @@ A user can comment and upvote pitches.
 A can submit pitches.
 A user can view the pitches they have submitted.
 
-###Limitations
+### Limitations
 Tests and unittests do not work.
 
 ### Technologies Used
