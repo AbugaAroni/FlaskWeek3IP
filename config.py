@@ -6,7 +6,8 @@ class Config:
     General configuration parent class
     '''
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://abuga:password@localhost/pitches'
+    #SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://abuga:password@localhost/pitches'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     #  email configurations
     MAIL_SERVER = 'smtp.gmail.com'
@@ -21,7 +22,7 @@ class Config:
         pass
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     pass
 
 class TestConfig(Config):
