@@ -20,10 +20,10 @@ class Config:
     def init_app(app):
         pass
 
-class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://abuga:password@localhost/pitches_test'
-
 class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+
+class ProdConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://abuga:password@localhost/pitches_test'
 
 class DevConfig(Config):
