@@ -1,10 +1,11 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
 from ..models import Pitch, User, Comment
-from .forms import PitchForm, UpdateProfile, Commentform
+from .forms import PitchForm, UpdateProfile, Commentform, Upvoteform, Downvoteform
 from .. import db
 from flask_login import login_required
 from flask_login import login_required, current_user
+from sqlalchemy import update
 
 # Views
 @main.route('/')
@@ -59,6 +60,9 @@ def new_pitch(userid):
 @login_required
 def comment(pitchid):
     form = Commentform()
+    form2 = Upvoteform()
+    form3 = Downvoteform()
+
     #pitch id needs a unique number
     pitchid=pitchid
     pitches = Pitch.get_singlepitch(pitchid)
@@ -72,8 +76,22 @@ def comment(pitchid):
 
         return redirect(url_for('main.comment',pitchid=pitchid))
 
+    if form2.validate_on_submit()and form2.submit1.data:
+        pitches.pitch_votes += 1
+        db.session.add(pitches)
+        db.session.commit()
+        return redirect(url_for('main.comment',pitchid=pitchid))
+
+    if form3.validate_on_submit() and form3.submit2.data:
+        pitches.pitch_votes = pitches.pitch_votes - 1
+        db.session.add(pitches)
+        db.session.commit()
+
+        return redirect(url_for('main.comment',pitchid=pitchid))
+
+
     title = 'View pitch'
-    return render_template('viewpitch.html',title = title, form=form, pitches = pitches, comments =comments, user =user)
+    return render_template('viewpitch.html',title = title, form=form, form2=form2, form3=form3, pitches = pitches, comments =comments, user =user)
 
 @main.route('/user/<uname>')
 def profile(uname):

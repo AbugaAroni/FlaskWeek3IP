@@ -61,6 +61,7 @@ class Pitch(db.Model):
     pitch_description = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+    pitch_votes = db.Column(db.Integer, default=0)
 
     comments = db.relationship('Comment', backref = 'pitches',lazy = "dynamic")
 
@@ -91,6 +92,12 @@ class Pitch(db.Model):
     def get_pitches(cls):
         pitches = Pitch.query.all()
         return pitches
+
+    #UPDATE pitches VOTES
+    @classmethod
+    def update_pitchvote(cls,id):
+        pitches = Pitch.query.filter_by(id=id).first()
+        pitches.pitch_votes += 10
 
 
 class Comment(db.Model):
