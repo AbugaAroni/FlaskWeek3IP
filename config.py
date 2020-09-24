@@ -21,8 +21,7 @@ class Config:
         pass
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    pass
+    SQLALCHEMY_DATABASE_URI = os.environ.get('postgresql+psycopg2://abuga:password@localhost/pitches_test')
 
 class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://abuga:password@localhost/pitches_test'
